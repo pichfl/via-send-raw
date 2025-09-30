@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+	"http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>gd.ylk.via-send-raw</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/sh</string>
+        <string>-c</string>
+        <string>date +"%s" | /ABSOLUTEPATTO/via-send-raw -v 0xcb00 -p 0x2006</string>
+    </array>
+    <key>RunAtLoad</key>
+    <true />
+    <key>StartInterval</key>
+    <integer>900</integer>
+  </dict>
+</plist>

@@ -6,7 +6,7 @@ mod utils;
 use utils::{open_device_or_exit, parse_hex_string, read_stdin_or_exit, send_data_with_retry};
 
 #[derive(Parser)]
-#[command(name = "viasendraw")]
+#[command(name = "via-send-raw")]
 #[command(about = "A tiny util to send raw data to VIA-compatible keyboards")]
 #[command(version)]
 struct Args {

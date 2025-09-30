@@ -1,14 +1,18 @@
-# viasendraw
+# via-send-raw
 
 A tiny util built using Rust to send raw data to VIA-compatible keyboards via USB HID.
 
 Defaults align with [QMK](https://docs.qmk.fm/features/rawhid#receiving-data-from-the-keyboard); the HID Usage Page and Usage ID for the Raw HID interface are `0xFF60` and `0x61`.
 
+## Requirements
+
+- [Rust](https://rust-lang.org/learn/get-started/)
+
 ## Usage
 
 ```sh
-echo "Hello" | viasendraw --vendor "0xcb00" --product "0x2006"
-printf "\x01\x02\x03" | viasendraw -v "0xcb00" -p "0x2006"
+echo "Hello" | via-send-raw --vendor "0xcb00" --product "0x2006"
+printf "\x01\x02\x03" | via-send-raw -v "0xcb00" -p "0x2006"
 ```
 
 ## Example Receiver
@@ -40,6 +44,43 @@ bool oled_task_user(void) {
 	  oled_write(received_message, false);
 		return false;
 }
+```
+
+## Run as a `launchd` service on macOS
+
+```fish
+# 1. clone this repo and switch into the folder
+git clone git@github.com:pichfl/via-send-raw.git
+cd via-send-raw
+
+# 2. Build
+cargo build -r
+
+# 3. Copy to LaunchAgents
+mkdir -p ~/Library/LaunchAgents
+cp gd.ylk.via-send-raw.plist ~/Library/LaunchAgents/
+
+# 4. Adjust the paths within the file
+nano ~/Library/LaunchAgents/gd.ylk.via-send-raw.plist
+
+# 4. Load service
+launchctl bootstrap gui/(id -u) ~/Library/LaunchAgents/gd.ylk.via-send-raw.plist
+```
+
+### Status
+
+```fish
+# Check if running
+launchctl list | grep via-send-raw
+# Print details
+launchctl print gui/(id -u)/gd.ylk.via-send-raw
+```
+
+### Removal
+
+```fish
+launchctl bootout gui/(id -u)/gd.ylk.via-send-raw
+rm ~/Library/LaunchAgents/gd.ylk.via-send-raw.plist
 ```
 
 ## License
